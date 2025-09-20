@@ -27,52 +27,55 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: appBlocProviders,
-      child: BlocConsumer<LocalizationBloc, LocalizationState>(
-        listener: (context, state) {
-          state.map(
-            initial: (_) {},
-            loaded: (value) {
-              if (value.error != null) {
-                rootScaffoldMessengerKey.currentState?.showSnackBar(
-                  SnackBar(
-                    content: Text(value.error!.title),
-                  ),
-                );
-              }
-            },
-          );
-        },
-        builder: (context, state) {
-          return state.map(
-            initial: (_) => SizedBox.shrink(),
-            loaded: (localeValue) {
-              return BlocBuilder<ThemeBloc, ThemeState>(
-                builder: (context, state) {
-                  return state.map(
-                    initial: (_) => SizedBox.shrink(),
-                    loaded: (themeValue) {
-                      return MaterialApp.router(
-                        scaffoldMessengerKey: rootScaffoldMessengerKey,
-                        key: ValueKey(localeValue
-                            .locale), //Used ValueKey so that entire widget try gets rebuilt at locale change
-                        routerConfig: serviceLocator<AppRouter>().config(),
-                        theme: themeValue.themeData,
-                        localizationsDelegates: const [
-                          S.delegate,
-                          GlobalMaterialLocalizations.delegate,
-                          GlobalWidgetsLocalizations.delegate,
-                          GlobalCupertinoLocalizations.delegate,
-                        ],
-                        supportedLocales: S.delegate.supportedLocales,
-                        locale: localeValue.locale.toSystemLocale(),
-                      );
-                    },
+      child: Builder(
+        builder: (BuildContext context) => BlocConsumer<LocalizationBloc, LocalizationState>(
+          listener: (context, state) {
+            state.map(
+              initial: (_) {},
+              loaded: (value) {
+                if (value.error != null) {
+                  rootScaffoldMessengerKey.currentState?.showSnackBar(
+                    SnackBar(
+                      content: Text(value.error!.title),
+                    ),
                   );
-                },
-              );
-            },
-          );
-        },
+                }
+              },
+            );
+          },
+          builder: (context, state) {
+            return state.map(
+              initial: (_) => SizedBox.shrink(),
+              loaded: (localeValue) {
+                return BlocBuilder<ThemeBloc, ThemeState>(
+                  builder: (context, state) {
+                    return state.map(
+                      initial: (_) => SizedBox.shrink(),
+                      loaded: (themeValue) {
+                        return MaterialApp.router(
+                          debugShowCheckedModeBanner: false,
+                          scaffoldMessengerKey: rootScaffoldMessengerKey,
+                          key: ValueKey(localeValue
+                              .locale), //Used ValueKey so that entire widget try gets rebuilt at locale change
+                          routerConfig: serviceLocator<AppRouter>().config(),
+                          theme: themeValue.themeData,
+                          localizationsDelegates: const [
+                            S.delegate,
+                            GlobalMaterialLocalizations.delegate,
+                            GlobalWidgetsLocalizations.delegate,
+                            GlobalCupertinoLocalizations.delegate,
+                          ],
+                          supportedLocales: S.delegate.supportedLocales,
+                          locale: localeValue.locale.toSystemLocale(),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

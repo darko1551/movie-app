@@ -69,9 +69,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i234.AppDatabase>(() => _i234.AppDatabase());
     gh.singleton<_i361.Dio>(() => dioProvider.dio);
-    gh.singleton<_i783.AppRouter>(() => _i783.AppRouter());
     gh.singleton<_i477.BottomNavigationBloc>(
         () => _i477.BottomNavigationBloc());
+    gh.singleton<_i783.AppRouter>(() => _i783.AppRouter());
     gh.singleton<_i327.IStorageService>(
         () => _i153.SharedPreferencesService(gh<_i460.SharedPreferences>()));
     gh.factory<_i92.ApiClient>(() => _i92.ApiClient.new(gh<_i361.Dio>()));
@@ -94,15 +94,15 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i273.IMovieSearchRepository>(
         () => _i890.MovieSearchRepository(gh<_i92.ApiClient>()));
+    gh.singleton<_i107.SeeMoreBloc>(() => _i107.SeeMoreBloc(
+          gh<_i589.IMovieRepository>(),
+          gh<_i958.LocalizationBloc>(),
+        ));
     gh.singleton<_i273.PopularBloc>(() => _i273.PopularBloc(
           gh<_i589.IMovieRepository>(),
           gh<_i958.LocalizationBloc>(),
         ));
     gh.singleton<_i447.NowShowingBloc>(() => _i447.NowShowingBloc(
-          gh<_i589.IMovieRepository>(),
-          gh<_i958.LocalizationBloc>(),
-        ));
-    gh.singleton<_i107.SeeMoreBloc>(() => _i107.SeeMoreBloc(
           gh<_i589.IMovieRepository>(),
           gh<_i958.LocalizationBloc>(),
         ));

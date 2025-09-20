@@ -20,7 +20,6 @@ class NowShowingBloc extends Bloc<NowShowingEvent, NowShowingState> {
 
   NowShowingBloc(this._movieRepository, this._localizationBloc) : super(_Loading()) {
     on<_LoadNowShowing>((event, emit) => _loadNowShowing(event, emit));
-
     _listenForLocaleChange();
   }
 

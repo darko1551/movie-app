@@ -17,7 +17,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   final LocalizationBloc _localizationBloc;
   LocaleEnum _currentLocale = LocaleEnum.english;
 
-  MovieDetailsBloc(this._movieDetailsRepository, this._localizationBloc) : super(_Initial()) {
+  MovieDetailsBloc(this._movieDetailsRepository, this._localizationBloc) : super(_Loading()) {
     on<_LoadMovieDetails>((event, emit) => _loadMovieDetails(event, emit));
 
     _listenForLocaleChange();

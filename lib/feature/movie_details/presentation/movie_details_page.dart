@@ -82,9 +82,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             error: (value) {
               return Text(value.error.title);
             },
-            initial: (_) {
-              return SizedBox.shrink();
-            },
           );
         },
       ),
