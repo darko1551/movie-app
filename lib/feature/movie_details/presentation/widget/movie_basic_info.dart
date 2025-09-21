@@ -29,7 +29,7 @@ class MovieBasicInfo extends StatelessWidget {
           value: language?.toUpperCase() ?? "-",
         ),
         MovieBasicInfoElement(
-          title: "Year",
+          title: S.current.year,
           value: releaseDate?.year != null ? releaseDate!.year.toString() : "-",
         )
       ],

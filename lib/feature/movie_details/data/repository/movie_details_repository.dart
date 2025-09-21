@@ -42,11 +42,13 @@ class MovieDetailsRepository implements IMovieDetailsRepository {
         },
         (exists) async {
           if (exists) {
+            // Remove from favorites
             var query = _appDatabase.delete(_appDatabase.movieTable)
               ..where((tbl) => tbl.id.equals(movie.id!));
             await query.go();
             return Right(unit);
           } else {
+            // Add to favorites
             MovieTableCompanion movieTableCompanion = movie.toCompanion();
             await _appDatabase.into(_appDatabase.movieTable).insert(
                   movieTableCompanion,
@@ -76,6 +78,7 @@ class MovieDetailsRepository implements IMovieDetailsRepository {
   EitherAppFailureOr<Stream<bool>> isFavoriteMovieStream(int movieId) async {
     try {
       var query = _appDatabase.select(_appDatabase.movieTable)..where((tbl) => tbl.id.equals(movieId));
+      // Convert query results stream to boolean stream indicating favorite status
       final stream = query.watch().map((row) => row.isNotEmpty);
       return Right(stream);
     } catch (e) {

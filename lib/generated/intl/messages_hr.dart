@@ -128,6 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "war": MessageLookupByLibrary.simpleMessage("Ratni"),
     "western": MessageLookupByLibrary.simpleMessage("Vestern"),
+    "year": MessageLookupByLibrary.simpleMessage("Godina"),
     "your_favorites_will_be_displayed_here":
         MessageLookupByLibrary.simpleMessage(
           "Ovdje će biti prikazani vaši favoriti",

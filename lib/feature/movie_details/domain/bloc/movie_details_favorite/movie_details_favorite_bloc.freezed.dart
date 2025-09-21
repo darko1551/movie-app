@@ -477,7 +477,6 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
@@ -485,8 +484,6 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
   }) {
     final _that = this;
     switch (_that) {
-      case _Initial() when initial != null:
-        return initial(_that);
       case _Loading() when loading != null:
         return loading(_that);
       case _Loaded() when loaded != null:
@@ -513,15 +510,12 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) {
     final _that = this;
     switch (_that) {
-      case _Initial():
-        return initial(_that);
       case _Loading():
         return loading(_that);
       case _Loaded():
@@ -547,15 +541,12 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
   }) {
     final _that = this;
     switch (_that) {
-      case _Initial() when initial != null:
-        return initial(_that);
       case _Loading() when loading != null:
         return loading(_that);
       case _Loaded() when loaded != null:
@@ -581,7 +572,6 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(bool isFavorite)? loaded,
     TResult Function(AppFailure error)? error,
@@ -589,8 +579,6 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
   }) {
     final _that = this;
     switch (_that) {
-      case _Initial() when initial != null:
-        return initial();
       case _Loading() when loading != null:
         return loading();
       case _Loaded() when loaded != null:
@@ -617,15 +605,12 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(bool isFavorite) loaded,
     required TResult Function(AppFailure error) error,
   }) {
     final _that = this;
     switch (_that) {
-      case _Initial():
-        return initial();
       case _Loading():
         return loading();
       case _Loaded():
@@ -651,15 +636,12 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(bool isFavorite)? loaded,
     TResult? Function(AppFailure error)? error,
   }) {
     final _that = this;
     switch (_that) {
-      case _Initial() when initial != null:
-        return initial();
       case _Loading() when loading != null:
         return loading();
       case _Loaded() when loaded != null:
@@ -669,26 +651,6 @@ extension MovieDetailsFavoriteStatePatterns on MovieDetailsFavoriteState {
       case _:
         return null;
     }
-  }
-}
-
-/// @nodoc
-
-class _Initial implements MovieDetailsFavoriteState {
-  const _Initial();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'MovieDetailsFavoriteState.initial()';
   }
 }
 

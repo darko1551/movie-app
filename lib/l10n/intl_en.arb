@@ -66,5 +66,6 @@
     "genre_filter": "Genre filter",
     "no_movies": "No movies",
     "filters": "Filters",
-    "enter_year": "Enter year"
+    "enter_year": "Enter year",
+    "year": "Year"
 }

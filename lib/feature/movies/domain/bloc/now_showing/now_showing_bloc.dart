@@ -30,6 +30,7 @@ class NowShowingBloc extends Bloc<NowShowingEvent, NowShowingState> {
           initial: (_) {},
           loaded: (locale) {
             _currentLocale = locale.locale;
+            // Reload movies with new locale when language changes
             add(_LoadNowShowing(1));
           },
         );

@@ -10,13 +10,10 @@ import 'package:movie_app/core/entity/movie_result.dart';
 import 'package:movie_app/core/error/app_failure.dart';
 import 'package:movie_app/core/localization/bloc/localization_bloc.dart';
 import 'package:movie_app/core/localization/locale_Enum.dart';
-import 'package:movie_app/feature/movie_search/data/repository/i_movie_search_repository.dart';
 import 'package:movie_app/feature/movie_search/domain/bloc/movie_search_bloc.dart';
 
-// Mock classes
-class MockMovieSearchRepository extends Mock implements IMovieSearchRepository {}
-
-class MockLocalizationBloc extends Mock implements LocalizationBloc {}
+import '../mocks/mock_localization_bloc.dart';
+import '../mocks/mock_movie_search_repository.dart';
 
 void main() {
   setUpAll(() {

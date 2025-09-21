@@ -20,8 +20,8 @@ class MovieDetailsBody extends StatelessWidget {
     required this.movie,
     required this.isFavorite,
     required DraggableScrollableController sheetController,
-    required double minChildSize,
-    required double maxChildSize,
+    required double minChildSize, //Min and initial height of the bottom sheet
+    required double maxChildSize, //Max height of the bottom sheet
   })  : _sheetController = sheetController,
         _minChildSize = minChildSize,
         _maxChildSize = maxChildSize;
@@ -56,7 +56,7 @@ class MovieDetailsBody extends StatelessWidget {
             maxChildSize: _maxChildSize,
             builder: (context, scrollController) {
               return SingleChildScrollView(
-                physics: ScrollPhysics().parent,
+                physics: ScrollPhysics().parent, // Enable nested scrolling with DraggableScrollableSheet
                 controller: scrollController,
                 child: Container(
                   decoration: BoxDecoration(

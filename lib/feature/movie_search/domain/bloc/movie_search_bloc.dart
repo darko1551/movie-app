@@ -43,14 +43,17 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
   }
 
   void _listenForLocaleChange() {
+    // Re-search with new locale when language changes and state is "NotSearching"
     _localizationBloc.stream.listen(
       (localeState) {
         localeState.map(
           initial: (_) {},
           loaded: (locale) {
             _currentLocale = locale.locale;
-            add(_Reset());
-            add(_Search(_lastSearchQuery, _lastYear));
+            if (state is _Loaded || state is _Loading) {
+              add(_Reset());
+              add(_Search(_lastSearchQuery, _lastYear));
+            }
           },
         );
       },
@@ -63,15 +66,15 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
   ) {
     if (_selectedGenres.contains(event.genre)) {
       _selectedGenres.remove(event.genre);
-      _selectedGenres.remove(event.genre);
     } else {
       _selectedGenres.add(event.genre);
     }
+    // Reset pagination when filter changes
     _page = 0;
     _totalPages = 1;
     if (state is _Loaded || state is _Loading) {
       add(_Reset());
-      add(_Search(_lastSearchQuery, _lastSearchQuery));
+      add(_Search(_lastSearchQuery, _lastYear));
     } else {
       emit(state.copyWith(selectedGenres: List.from(_selectedGenres)));
     }
@@ -131,6 +134,7 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
         (l) => emit(_Error(l, _genreFilterIsExpanded, List.from(_selectedGenres))),
         (r) => state.maybeWhen(
               loaded: (movies, _, __, ___) {
+                // Pagination: append new results to existing movies
                 _totalPages = r.totalPages ?? -1;
 
                 final filteredMovies = _filterMoviesByGenre(r.results);
@@ -144,6 +148,7 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
                 ));
               },
               orElse: () {
+                // First search: show filtered results
                 _totalPages = r.totalPages ?? -1;
                 final filteredMovies = _filterMoviesByGenre(r.results);
                 emit(_Loaded(

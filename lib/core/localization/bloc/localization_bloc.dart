@@ -27,11 +27,13 @@ class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
     final result = _storageService.getString(Constants.locale);
     await result.fold(
       (error) async {
+        // Fallback to English if storage read fails
         final locale = LocaleEnum.english;
         await _saveLocale(locale, emit);
       },
       (value) async {
-        LocaleEnum? locale = LocaleEnum.fromCode(value ?? "en");
+        // Default to English on first app start (null value) or invalid locale code
+        LocaleEnum? locale = LocaleEnum.fromCode(value ?? "en"); // English language on app's first start
         locale = locale ?? LocaleEnum.english;
 
         await _saveLocale(locale, emit);
@@ -43,6 +45,7 @@ class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
     final result = await _storageService.setString(Constants.locale, locale.localeCode);
     result.fold(
       (error) {
+        // Emit English with error if storage save fails, but keep app functional
         emit(_Loaded(LocaleEnum.english, error: error));
       },
       (_) {

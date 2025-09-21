@@ -51,7 +51,8 @@ class _LanguageSettingState extends State<LanguageSetting> {
                   return ClipRect(
                     child: Align(
                       alignment: Alignment.topCenter,
-                      heightFactor: value, // animates from 0 → 1 smoothly
+                      // Animate height: 0 = hidden, 1 = full height
+                      heightFactor: value,
                       child: child,
                     ),
                   );
@@ -72,9 +73,6 @@ class _LanguageSettingState extends State<LanguageSetting> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 8,
-                    )
                   ],
                 ),
               ),

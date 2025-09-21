@@ -42,7 +42,6 @@ class _ShowMorePageState extends State<SeeMorePage> {
     final state = serviceLocator<SeeMoreBloc>().state;
     state.maybeWhen(
       error: (_) {},
-      loading: () {},
       orElse: () {
         serviceLocator<SeeMoreBloc>().add(SeeMoreEvent.loadMovies(widget.movieListType));
       },
@@ -51,6 +50,7 @@ class _ShowMorePageState extends State<SeeMorePage> {
 
   void _addMoreItems() {
     final state = serviceLocator<SeeMoreBloc>().state;
+    // Load next page when user scrolls to bottom
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
       state.maybeWhen(
         error: (_) {},
@@ -73,9 +73,8 @@ class _ShowMorePageState extends State<SeeMorePage> {
         child: BlocBuilder<SeeMoreBloc, SeeMoreState>(
           builder: (context, state) {
             return state.map(
-              loading: (value) => SizedBox.shrink(),
               error: (error) => Text(error.error.title),
-              initial: (_) => Center(
+              loading: (_) => Center(
                 child: CircularProgressIndicator(),
               ),
               loaded: (value) {
@@ -84,9 +83,11 @@ class _ShowMorePageState extends State<SeeMorePage> {
                 }
                 return ListView.builder(
                   controller: _scrollController,
+                  // Add extra item for loading indicator at bottom
                   itemCount: value.movies.length + 1,
                   itemBuilder: (context, index) {
                     if (index == value.movies.length) {
+                      // Show loading indicator when fetching more pages
                       if (value.loadingMore) {
                         return Center(child: CircularProgressIndicator());
                       } else {

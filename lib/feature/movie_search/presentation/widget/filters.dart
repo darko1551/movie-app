@@ -36,7 +36,8 @@ class _FiltersState extends State<Filters> {
                 return ClipRect(
                   child: Align(
                     alignment: Alignment.topCenter,
-                    heightFactor: value, // animates from 0 → 1 smoothly
+                    // Animate height: 0 = hidden, 1 = full height
+                    heightFactor: value,
                     child: child,
                   ),
                 );

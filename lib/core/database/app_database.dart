@@ -21,11 +21,11 @@ class AppDatabase extends _$AppDatabase {
           await m.createAll();
         },
         onUpgrade: (m, from, to) async {
-          // Drop all tables
+          // Simple migration: drop and recreate all tables (loses data)
+          // Not suitable for production apps since it does not preserve data, but does the trick in this situation
           for (final table in allTables) {
             await m.drop(table);
           }
-          // Recreate all tables
           await m.createAll();
         },
       );

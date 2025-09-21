@@ -56,6 +56,7 @@ class NowShowing extends StatelessWidget {
                       (index) {
                         Movie movie = value.movies.elementAt(index);
                         return Padding(
+                          // Add screen padding for first/last items, standard spacing between items
                           padding: EdgeInsets.only(
                             left: index == 0 ? 24 : 16,
                             right: index == value.movies.length - 1 ? 24 : 0,

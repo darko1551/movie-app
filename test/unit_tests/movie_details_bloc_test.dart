@@ -7,18 +7,13 @@ import 'package:mocktail/mocktail.dart';
 import 'package:movie_app/core/error/app_failure.dart';
 import 'package:movie_app/core/localization/bloc/localization_bloc.dart';
 import 'package:movie_app/core/localization/locale_Enum.dart';
-import 'package:movie_app/feature/movie_details/data/repository/i_movie_details_repository.dart';
 import 'package:movie_app/feature/movie_details/domain/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movie_app/feature/movie_details/domain/entities/movie_details.dart';
 
-// Mock classes
-class MockMovieDetailsRepository extends Mock implements IMovieDetailsRepository {}
-
-class MockLocalizationBloc extends Mock implements LocalizationBloc {}
-
-class MockMovieDetails extends Mock implements MovieDetails {}
-
-class MockAppFailure extends Mock implements AppFailure {}
+import '../mocks/mock_app_failure.dart';
+import '../mocks/mock_localization_bloc.dart';
+import '../mocks/mock_movie_details.dart';
+import '../mocks/mock_movie_details_repository.dart';
 
 void main() {
   group('MovieDetailsBloc', () {

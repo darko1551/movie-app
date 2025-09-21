@@ -66,5 +66,6 @@
   "genre_filter": "Filtar žanrova",
   "no_movies": "Nema filmova",
   "filters": "Filteri",
-  "enter_year": "Unesite godinu"
+  "enter_year": "Unesite godinu",
+  "year": "Godina"
 }

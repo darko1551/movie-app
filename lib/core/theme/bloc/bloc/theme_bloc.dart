@@ -30,6 +30,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   }
 
   Future<void> _toggleThemeMode(Emitter<ThemeState> emit) async {
+    // Safe cast since toggle is only called when state is already loaded
     var loadedState = state as _Loaded;
     var isDarkMode = loadedState.themeMode == ThemeMode.dark;
 
@@ -48,6 +49,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
         ),
       );
     }
+    // Persist the new theme preference
     await _storageService.setBool(Constants.isDarkMode, !isDarkMode);
   }
 }

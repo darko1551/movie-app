@@ -56,7 +56,8 @@ class MyApp extends StatelessWidget {
                           debugShowCheckedModeBanner: false,
                           scaffoldMessengerKey: rootScaffoldMessengerKey,
                           key: ValueKey(localeValue
-                              .locale), //Used ValueKey so that entire widget try gets rebuilt at locale change
+                              .locale), // Force complete app rebuild when locale changes for proper localization
+
                           routerConfig: serviceLocator<AppRouter>().config(),
                           theme: themeValue.themeData,
                           localizationsDelegates: const [

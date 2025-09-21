@@ -518,6 +518,11 @@ class S {
   String get enter_year {
     return Intl.message('Enter year', name: 'enter_year', desc: '', args: []);
   }
+
+  /// `Year`
+  String get year {
+    return Intl.message('Year', name: 'year', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

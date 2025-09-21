@@ -32,6 +32,7 @@ class _MovieSearchPageState extends State<MovieSearchPage> {
   }
 
   void _onYearChanged() {
+    // Cancel previous timer to prevent multiple API calls while user is typing
     if (_yearDebounceTimer?.isActive ?? false) _yearDebounceTimer!.cancel();
     _yearDebounceTimer = Timer(Duration(seconds: 1), () {
       final year = _yearTextEditingController.text;
@@ -41,6 +42,7 @@ class _MovieSearchPageState extends State<MovieSearchPage> {
   }
 
   void _onSearchChanged() {
+    // Debounce search: wait 1 second after user stops typing before searching
     if (_searchDebounceTimer?.isActive ?? false) _searchDebounceTimer!.cancel();
     _searchDebounceTimer = Timer(Duration(seconds: 1), () {
       final query = _searchTextEditingController.text;
@@ -50,6 +52,7 @@ class _MovieSearchPageState extends State<MovieSearchPage> {
   }
 
   void search(String query, String year) async {
+    // Reset pagination when search query changes
     serviceLocator<MovieSearchBloc>().add(MovieSearchEvent.reset());
     if (query.isNotEmpty) {
       serviceLocator<MovieSearchBloc>().add(MovieSearchEvent.search(query, year));
@@ -68,6 +71,7 @@ class _MovieSearchPageState extends State<MovieSearchPage> {
 
   void _addMoreItems() {
     final state = serviceLocator<MovieSearchBloc>().state;
+    // Load next page when user scrolls to the bottom
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
       state.maybeWhen(
         error: (_, __, ___) {},

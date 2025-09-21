@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,33 +8,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:movie_app/core/entity/movie.dart';
-import 'package:movie_app/core/error/app_failure.dart';
 import 'package:movie_app/core/navigation/app_router.dart';
 import 'package:movie_app/feature/movie_details/domain/bloc/movie_details/movie_details_bloc.dart';
 import 'package:movie_app/feature/movie_details/domain/bloc/movie_details_favorite/movie_details_favorite_bloc.dart';
 import 'package:movie_app/feature/movie_details/domain/entities/movie_details.dart';
-import 'package:movie_app/feature/movie_details/presentation/movie_details_page.dart';
 import 'package:movie_app/feature/movie_details/presentation/widget/movie_details_body.dart';
 import 'package:movie_app/generated/l10n.dart';
 
-// Mock classes
-class MockMovieDetailsBloc extends MockBloc<MovieDetailsEvent, MovieDetailsState>
-    implements MovieDetailsBloc {}
-
-class MockMovieDetailsFavoriteBloc extends MockBloc<MovieDetailsFavoriteEvent, MovieDetailsFavoriteState>
-    implements MovieDetailsFavoriteBloc {}
-
-class MockStackRouter extends Mock implements StackRouter {}
-
-// Add mock for AppRouter
-class MockAppRouter extends Mock implements AppRouter {}
-
-// Mock entities
-class MockMovie extends Mock implements Movie {}
-
-class MockMovieDetails extends Mock implements MovieDetails {}
-
-class MockAppError extends Mock implements AppFailure {}
+import '../mocks/mock_app_failure.dart';
+import '../mocks/mock_app_router.dart';
+import '../mocks/mock_movie.dart';
+import '../mocks/mock_movie_details.dart';
+import '../mocks/mock_movie_details_bloc.dart';
+import '../mocks/mock_movie_details_favorite_bloc.dart';
+import '../mocks/mock_stack_router.dart';
 
 // Test wrapper widget that provides BLoCs without using service locator
 class TestMovieDetailsPageWrapper extends StatelessWidget {
@@ -130,7 +116,6 @@ class _TestableMovieDetailsPageState extends State<TestableMovieDetailsPage> {
                 bloc: widget.movieDetailsFavoriteBloc,
                 builder: (context, state) {
                   return state.map(
-                      initial: (_) => Center(child: CircularProgressIndicator()),
                       loading: (_) => Center(child: CircularProgressIndicator()),
                       loaded: (isFav) => MovieDetailsBody(
                             headerHeight: headerHeight,
@@ -160,7 +145,7 @@ void main() {
     late MockMovieDetailsBloc mockMovieDetailsBloc;
     late MockMovieDetailsFavoriteBloc mockMovieDetailsFavoriteBloc;
     late MockStackRouter mockRouter;
-    late MockAppRouter mockAppRouter; // Add this
+    late MockAppRouter mockAppRouter;
     late Movie testMovie;
     late MovieDetails testMovieDetails;
 
@@ -197,9 +182,9 @@ void main() {
       when(() => mockMovieDetailsBloc.stream)
           .thenAnswer((_) => Stream.value(const MovieDetailsState.loading()));
 
-      when(() => mockMovieDetailsFavoriteBloc.state).thenReturn(const MovieDetailsFavoriteState.initial());
+      when(() => mockMovieDetailsFavoriteBloc.state).thenReturn(const MovieDetailsFavoriteState.loading());
       when(() => mockMovieDetailsFavoriteBloc.stream)
-          .thenAnswer((_) => Stream.value(const MovieDetailsFavoriteState.initial()));
+          .thenAnswer((_) => Stream.value(const MovieDetailsFavoriteState.loading()));
     });
 
     tearDown(() {
@@ -231,7 +216,7 @@ void main() {
     testWidgets('should display loading indicator when MovieDetailsBloc is in loading state', (tester) async {
       // Arrange
       when(() => mockMovieDetailsBloc.state).thenReturn(const MovieDetailsState.loading());
-      when(() => mockMovieDetailsFavoriteBloc.state).thenReturn(const MovieDetailsFavoriteState.initial());
+      when(() => mockMovieDetailsFavoriteBloc.state).thenReturn(const MovieDetailsFavoriteState.loading());
 
       // Act
       await tester.pumpWidget(createTestWidget());
@@ -244,7 +229,7 @@ void main() {
 
     testWidgets('should display error message when MovieDetailsBloc is in error state', (tester) async {
       // Arrange
-      final mockError = MockAppError();
+      final mockError = MockAppFailure();
       when(() => mockError.title).thenReturn('Error loading movie details');
       when(() => mockMovieDetailsBloc.state).thenReturn(MovieDetailsState.error(mockError));
       when(() => mockMovieDetailsBloc.stream)
@@ -298,7 +283,7 @@ void main() {
 
     testWidgets('should display error when MovieDetailsFavoriteBloc is in error state', (tester) async {
       // Arrange
-      final mockError = MockAppError();
+      final mockError = MockAppFailure();
       when(() => mockError.title).thenReturn('Favorite error');
       when(() => mockMovieDetailsBloc.state).thenReturn(MovieDetailsState.loaded(testMovieDetails));
       when(() => mockMovieDetailsBloc.stream)
@@ -319,7 +304,7 @@ void main() {
     testWidgets('should trigger correct events on initState', (tester) async {
       // Arrange
       when(() => mockMovieDetailsBloc.state).thenReturn(const MovieDetailsState.loading());
-      when(() => mockMovieDetailsFavoriteBloc.state).thenReturn(const MovieDetailsFavoriteState.initial());
+      when(() => mockMovieDetailsFavoriteBloc.state).thenReturn(const MovieDetailsFavoriteState.loading());
 
       // Act
       await tester.pumpWidget(createTestWidget());
@@ -481,7 +466,7 @@ void main() {
         when(() => movie.title).thenReturn('Test Movie');
 
         when(() => mockMovieDetailsBloc.state).thenReturn(const MovieDetailsState.loading());
-        when(() => mockMovieDetailsFavoriteBloc.state).thenReturn(const MovieDetailsFavoriteState.initial());
+        when(() => mockMovieDetailsFavoriteBloc.state).thenReturn(const MovieDetailsFavoriteState.loading());
 
         // Act
         await tester.pumpWidget(createTestWidget(movie: movie));
@@ -519,9 +504,6 @@ void main() {
 
     // Add a test for navigation functionality that was causing the original error
     testWidgets('should navigate to MovieDetails when movie is tapped', (tester) async {
-      // This test would have caused the original error but now should work
-      // since we've registered the mock AppRouter
-
       // Arrange
       when(() => mockMovieDetailsBloc.state).thenReturn(MovieDetailsState.loaded(testMovieDetails));
       when(() => mockMovieDetailsBloc.stream)
@@ -536,9 +518,6 @@ void main() {
 
       // Assert - Widget should render without the GetIt error
       expect(find.byType(MovieDetailsBody), findsOneWidget);
-
-      // You can now add navigation interaction tests here if needed
-      // For example, if there are buttons that trigger navigation
     });
   });
 }

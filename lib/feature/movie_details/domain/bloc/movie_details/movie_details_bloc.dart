@@ -24,6 +24,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   }
 
   void _listenForLocaleChange() {
+    // Listen to locale changes to update current locale for future movie detail requests
     _localizationBloc.stream.listen(
       (localeState) {
         localeState.map(

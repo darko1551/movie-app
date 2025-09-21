@@ -14,11 +14,13 @@ class AppRouter extends RootStackRouter {
           page: MainRoute.page,
           initial: true,
           children: [
+            // Routes used in bottom navigation bar
             AutoRoute(page: MoviesRoute.page, initial: true),
             AutoRoute(page: MovieSearchRoute.page),
             AutoRoute(page: SettingsRoute.page),
           ],
         ),
+        // Other routes
         AutoRoute(page: MovieDetailsRoute.page),
         AutoRoute(page: SeeMoreRoute.page),
       ];

@@ -26,6 +26,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     Emitter<FavoriteState> emit,
   ) async {
     emit(_Loading());
+    // Cancel existing subscription to prevent memory leaks
     _favoriteSubscription?.cancel();
     final favoriteResult = await _movieRepository.fetchFavoriteMoviesStream();
     favoriteResult.fold(

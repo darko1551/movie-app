@@ -16,7 +16,7 @@ class MovieDetailsFavoriteBloc extends Bloc<MovieDetailsFavoriteEvent, MovieDeta
   final IMovieDetailsRepository _movieDetailsRepository;
   StreamSubscription<bool>? _favoriteSubscription;
 
-  MovieDetailsFavoriteBloc(this._movieDetailsRepository) : super(_Initial()) {
+  MovieDetailsFavoriteBloc(this._movieDetailsRepository) : super(_Loading()) {
     on<_AddOrRemoveFavorite>((event, emit) async => await _addOrRemoveFavorite(event, emit));
     on<_WatchFavoriteStatus>((event, emit) async => await _watchFavoriteStatus(event, emit));
     on<_OnFavoriteStatusChanged>((event, emit) async => _onFavoriteStatusChanged(event, emit));
@@ -26,7 +26,6 @@ class MovieDetailsFavoriteBloc extends Bloc<MovieDetailsFavoriteEvent, MovieDeta
     _AddOrRemoveFavorite event,
     Emitter<MovieDetailsFavoriteState> emit,
   ) async {
-    //emit(_Loading());
     final addOrRemoveFavoriteResult = await _movieDetailsRepository.addOrRemoveFavorite(event.movie);
     addOrRemoveFavoriteResult.fold(
       (l) {
@@ -44,7 +43,8 @@ class MovieDetailsFavoriteBloc extends Bloc<MovieDetailsFavoriteEvent, MovieDeta
     _WatchFavoriteStatus event,
     Emitter<MovieDetailsFavoriteState> emit,
   ) async {
-    _favoriteSubscription?.cancel();
+    _favoriteSubscription
+        ?.cancel(); // Cancel existing subscription to prevent memory leaks when switching movies
 
     final eitherStream = await _movieDetailsRepository.isFavoriteMovieStream(event.movieId);
     eitherStream.fold(

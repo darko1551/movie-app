@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/widget/media_image.dart';
-import 'package:movie_app/core/widget/show_more_button.dart';
 import 'package:movie_app/feature/movie_details/domain/entities/cast.dart';
 import 'package:movie_app/generated/l10n.dart';
 
@@ -37,6 +36,7 @@ class MovieCast extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(cast.length, (index) {
               return Padding(
+                // Add screen padding for first/last items, standard spacing between items
                 padding: EdgeInsets.only(
                   left: index == 0 ? 24 : 16,
                   right: index == cast.length - 1 ? 24 : 0,

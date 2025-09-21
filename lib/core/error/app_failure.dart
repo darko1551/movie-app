@@ -53,6 +53,7 @@ class AppFailure implements Exception {
 
   static String _handleServerError(DioException dioException) {
     try {
+      // Try to extract error message from different possible server response formats
       final data = dioException.response?.data;
       if (data is Map<String, dynamic>) {
         return data['message'] ?? data['error'] ?? S.current.unexpected_server_error;

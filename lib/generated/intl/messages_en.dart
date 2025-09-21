@@ -120,6 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "war": MessageLookupByLibrary.simpleMessage("War"),
     "western": MessageLookupByLibrary.simpleMessage("Western"),
+    "year": MessageLookupByLibrary.simpleMessage("Year"),
     "your_favorites_will_be_displayed_here":
         MessageLookupByLibrary.simpleMessage(
           "Your favorites will be displayed here.",

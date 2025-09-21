@@ -7,6 +7,7 @@ class MovieTable extends Table {
   IntColumn get id => integer().unique()();
   TextColumn get title => text().nullable()();
   TextColumn get posterPath => text().nullable()();
+  // Store genre IDs as JSON string in database, converted to/from List<int>
   TextColumn get genresJson => text().map(const IntListConverter()).nullable()();
   RealColumn get voteAverage => real().nullable()();
   DateTimeColumn get releaseDate => dateTime().nullable()();

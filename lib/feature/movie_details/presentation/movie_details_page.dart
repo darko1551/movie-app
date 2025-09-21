@@ -50,6 +50,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Shrink header from 600px to 400px as sheet expands beyond minimum size
     final double headerHeight = 600 - ((sheetOffset - _minChildSize) * 600).clamp(0, 200);
     return Scaffold(
       body: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
@@ -64,7 +65,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
               return BlocBuilder<MovieDetailsFavoriteBloc, MovieDetailsFavoriteState>(
                 builder: (context, state) {
                   return state.map(
-                      initial: (_) => Center(child: CircularProgressIndicator()),
                       loading: (_) => Center(child: CircularProgressIndicator()),
                       loaded: (isFav) => MovieDetailsBody(
                             headerHeight: headerHeight,

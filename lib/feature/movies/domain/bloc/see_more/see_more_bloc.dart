@@ -22,7 +22,7 @@ class SeeMoreBloc extends Bloc<SeeMoreEvent, SeeMoreState> {
   int _page = 0;
   int _totalPages = 1;
 
-  SeeMoreBloc(this._movieRepository, this._localizationBloc) : super(_Initial()) {
+  SeeMoreBloc(this._movieRepository, this._localizationBloc) : super(_Loading()) {
     on<_LoadMovies>((event, emit) => _loadMovies(event, emit));
     on<_Reset>((event, emit) => _reset(event, emit));
 
@@ -58,6 +58,7 @@ class SeeMoreBloc extends Bloc<SeeMoreEvent, SeeMoreState> {
           _foldAndUpdateStateFromResponse(movieResult, emit);
 
         case MovieListType.favorite:
+          // Favorites don't have pagination - load all from local database
           final movies = await _movieRepository.fetchFavoriteMovies();
           _foldAndUpdateState(movies, emit);
       }
@@ -72,11 +73,13 @@ class SeeMoreBloc extends Bloc<SeeMoreEvent, SeeMoreState> {
         (l) => emit(_Error(l)),
         (r) => state.maybeWhen(
               loaded: (movies, _) {
+                // Pagination: append new movies to existing list
                 _totalPages = r.totalPages ?? -1;
                 final updates = List<Movie>.from(movies)..addAll(r.results ?? []);
                 emit(_Loaded(updates, _page != _totalPages));
               },
               orElse: () {
+                // First load
                 _totalPages = r.totalPages ?? -1;
                 emit(_Loaded(r.results ?? [], _page != _totalPages));
               },
@@ -107,6 +110,6 @@ class SeeMoreBloc extends Bloc<SeeMoreEvent, SeeMoreState> {
   ) async {
     _page = 0;
     _totalPages = 1;
-    emit(_Initial());
+    emit(_Loading());
   }
 }

@@ -31,6 +31,7 @@ class PopularBloc extends Bloc<PopularEvent, PopularState> {
           initial: (_) {},
           loaded: (locale) {
             _currentLocale = locale.locale;
+            // Reload movies with new locale when language changes
             add(_LoadPopular(1));
           },
         );

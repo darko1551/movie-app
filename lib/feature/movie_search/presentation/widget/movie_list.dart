@@ -46,9 +46,10 @@ class MovieList extends StatelessWidget {
             return ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: value.movies.length + 1,
+              itemCount: value.movies.length + 1, // Add extra item for loading indicator at bottom
               itemBuilder: (context, index) {
                 if (index == value.movies.length) {
+                  // Show loading indicator when fetching more pages
                   if (value.loadingMore) {
                     return Center(child: CircularProgressIndicator());
                   } else {

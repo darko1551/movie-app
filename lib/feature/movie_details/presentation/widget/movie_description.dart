@@ -11,14 +11,12 @@ class MovieDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 8,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           S.current.description,
           style: Theme.of(context).textTheme.headlineLarge,
-        ),
-        SizedBox(
-          height: 8,
         ),
         Text(
           descrition ?? S.current.no_description,

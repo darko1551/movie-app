@@ -56,12 +56,14 @@ ThemeData get lightTheme => ThemeData(
         selectedItemColor: MovieAppColors.darkBlue,
       ),
       switchTheme: SwitchThemeData(
+        // Track (background) color based on switch state
         trackColor: WidgetStateProperty.resolveWith<Color>(
           (states) {
             if (states.contains(WidgetState.selected)) return MovieAppColors.darkBlue;
             return MovieAppColors.white;
           },
         ),
+        // Thumb (circle) color based on switch state
         thumbColor: WidgetStateProperty.resolveWith<Color>(
           (states) {
             if (states.contains(WidgetState.selected)) return Colors.blue;
@@ -126,12 +128,14 @@ ThemeData get darkTheme => ThemeData(
         selectedItemColor: MovieAppColors.white,
       ),
       switchTheme: SwitchThemeData(
+        // Track (background) color based on switch state
         trackColor: WidgetStateProperty.resolveWith<Color>(
           (states) {
             if (states.contains(WidgetState.selected)) return MovieAppColors.white;
             return Colors.grey.shade400;
           },
         ),
+        // Thumb (circle) color based on switch state
         thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.selected)) return MovieAppColors.mediumBlue;
           return Colors.white;
