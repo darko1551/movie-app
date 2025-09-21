@@ -168,3 +168,9 @@ This app uses [The Movie Database (TMDB) API v3](https://developers.themoviedb.o
 - **Internet Required**: App requires internet connection for movie data (except viewing saved favorites)
 - **No Offline Browsing**: Movies cannot be browsed without internet connection
 - **Favorites Only Offline**: Only previously saved favorites are accessible offline
+
+
+## Design inspiration
+
+- **Figma**: https://www.figma.com/design/eeR9JQF6tlDObWLQRQMJRJ/Movie-Mobile-App-UI-Design--Community-?node-id=0-2
+
