@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:movie_app/feature/movies/data/models/movie_details_response.dart';
-import 'package:movie_app/feature/movies/data/models/movie_result_response.dart';
+import 'package:movie_app/core/models/movie_details_response.dart';
+import 'package:movie_app/core/models/movie_result_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';

@@ -39,7 +39,7 @@ lib/
 ```
 
 Each feature follows the Clean Architecture pattern:
-- **Data Layer**: Models, repository interfaces and implementations
+- **Data Layer**: Repository interfaces and implementations
 - **Domain Layer**: BLoC (bloc, state, event) and entity models  
 - **Presentation Layer**: Pages and widgets
 

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:movie_app/feature/movie_details/data/models/cast_result_response.dart';
-import 'package:movie_app/feature/movies/data/models/genre_response.dart';
+import 'package:movie_app/core/models/cast_result_response.dart';
+import 'package:movie_app/core/models/genre_response.dart';
 import 'package:movie_app/feature/movie_details/domain/entities/movie_details.dart';
 
 part 'movie_details_response.g.dart';
