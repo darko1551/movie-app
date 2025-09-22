@@ -6,12 +6,14 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hint,
+    this.keyboardType,
     this.icon,
     this.suffixIcon,
     this.onSufixTaped,
   });
 
   final TextEditingController controller;
+  final TextInputType? keyboardType;
   final String hint;
   final IconData? icon;
   final IconData? suffixIcon;
@@ -26,6 +28,7 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
+        keyboardType: keyboardType ?? TextInputType.text,
         decoration: InputDecoration(
           hint: Text(
             hint,

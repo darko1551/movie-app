@@ -54,6 +54,7 @@ class _FiltersState extends State<Filters> {
                   ),
                   CustomTextField(
                     controller: widget.yearTextEditingController,
+                    keyboardType: TextInputType.number,
                     hint: S.current.enter_year,
                     icon: Icons.date_range,
                     suffixIcon: Icons.clear_rounded,
